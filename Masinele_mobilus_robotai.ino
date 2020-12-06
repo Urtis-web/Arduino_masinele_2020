@@ -66,32 +66,31 @@ int speeed_kaires = 100;
 int speeed_dsnes = 100;
 
 int A = 0;
-int B = 0;    // atvejis kai sukant i desne uz kliuties atsimusa su desniu ratu ir pakimba
-int AA = 0;   // jeigu po 1 veiksmo(bandymo sukti i kaire), vel griztama prie 6 didinamas pasukimas i desne
-int BB = 0;   // jeigu po 2 arba 1 veiksmo(bandymo sukti i kaire), pereinama prie 3 veiksmo didinamas pasukimas i desne
-int AAA = 0;  // 
-int BBB = 0;  //
+int B = 0;
+int AA = 0;
+int BB = 0;
+int AAA = 0;
 
-int pirmo_flegas = 0;     //flegas kad atskirti kuris veiksmas dabar buvo
-int antro_flegas = 0;     //flegas kad atskirti kuris veiksmas dabar buvo
-int trecio_flegas = 0;    //flegas kad atskirti kuris veiksmas dabar buvo
-int ketvirto_flegas = 0;  //flegas kad atskirti kuris veiksmas dabar buvo
-int penkto_flegas = 0;    //flegas kad atskirti kuris veiksmas dabar buvo
-int sesto_flegas = 0;     //flegas kad atskirti kuris veiksmas dabar buvo
+int pirmo_flegas = 0;
+int antro_flegas = 0;
+int trecio_flegas = 0;
+int ketvirto_flegas = 0;
+int penkto_flegas = 0;
+int sesto_flegas = 0;
 
-int pirmo_skaiciuokle = 0;     // skaiciuoja kiek kartu buvo atliktas pirmas veiksmas
-int antro_skaiciuokle = 0;     // skaiciuoja kiek kartu buvo atliktas antras veiksmas
-int trecio_skaiciuokle = 0;    // skaiciuoja kiek kartu buvo atliktas trecias veiksmas
-int ketvirto_skaiciuokle = 0;  // skaiciuoja kiek kartu buvo atliktas ketvirtas veiksmas
-int penkto_skaiciuokle = 0;    // skaiciuoja kiek kartu buvo atliktas penktas veiksmas
-int sesto_skaiciuokle = 0;     // skaiciuoja kiek kartu buvo atliktas sestas veiksmas
+int pirmo_skaiciuokle = 0;
+int antro_skaiciuokle = 0;
+int trecio_skaiciuokle = 0;
+int ketvirto_skaiciuokle = 0;
+int penkto_skaiciuokle = 0;
+int sesto_skaiciuokle = 0;
 
-int pirmo_skaiciuokle_papildoma = 0;      // is 5 ir 6 ateina signalas kad turi prasideti posukis i desne
-int antro_skaiciuokle_papildoma  = 0;     // is 5 ir 6 ateina signalas kad turi prasideti posukis i desne
-int trecio_skaiciuokle_papildoma  = 0;    //
-int ketvirto_skaiciuokle_papildoma  = 0;  //
-int penkto_skaiciuokle_papildoma  = 0;    // pranesa 5, kad katik buvo 6
-int sesto_skaiciuokle_papildoma  = 0;     // is penkto ateina, kad kompensuotu krypti
+int pirmo_skaiciuokle_papildoma = 0;
+int antro_skaiciuokle_papildoma  = 0;
+int trecio_skaiciuokle_papildoma  = 0;
+int ketvirto_skaiciuokle_papildoma  = 0;
+int penkto_skaiciuokle_papildoma  = 0;
+int sesto_skaiciuokle_papildoma  = 0;
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
@@ -245,7 +244,6 @@ void Vaziavimas(){
 /////////////////////////////////////////////////////////PIRMAS///////////////////////////////////////////////////////////////
 
 if ((dis1_priekis >= 60) && (dis2_desne >= 25)){  // pirmas ---
-  
 
   if ((pirmo_flegas == 1) && (pirmo_skaiciuokle >= 0) && (pirmo_skaiciuokle_papildoma == 0)){
   speeed_dsnes = 80;
@@ -274,8 +272,8 @@ if ((dis1_priekis >= 60) && (dis2_desne >= 25)){  // pirmas ---
     vaziavimo_kryptys_suktis_i_desne();
     delay(250);
     pirmo_skaiciuokle_papildoma++;
-   AA = 1;  // jeigu po 1 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
-  BB = 1;  // // jeigu po 1 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
+  //  AA = 1;  // jeigu po 1 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
+   // BB = 1;  // // jeigu po 1 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
   }
 /////////////////////////////
 pirmo_flegas = 1;
@@ -338,8 +336,8 @@ if ((dis1_priekis >= 25) && (dis1_priekis <= 60)&& (dis2_desne >= 25)){  // antr
     vaziavimo_kryptys_suktis_i_desne();
     delay(250);
     antro_skaiciuokle_papildoma++;
-  AA = 1;  // jeigu po 2 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
-  BB = 1;  // jeigu po 2 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
+   // AA = 1;  // jeigu po 2 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
+  //  BB = 1;  // jeigu po 2 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
   }
   
 /////////////////////////////
@@ -380,7 +378,7 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
   vaziavimo_kryptys_I_prieki(); 
   delay(400); 
   }
- 
+  /*
   if (BB > 0) {    // jeigu po 2 arba 1 veiksmo(bandymo sukti i kaire), pereinama prie 3 veiksmo didinamas pasukimas i desne
   speeed_dsnes = 80;
   speeed_kaires = 80;
@@ -392,7 +390,7 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
   delay(500);
   vaziavimo_kryptys_I_prieki(); 
   }
-
+  */
   if (antro_flegas == 1){
     
   }
