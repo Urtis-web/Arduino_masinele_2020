@@ -267,15 +267,16 @@ void vaziavimo_kryptys_atgal(){
 void Vaziavimas(){    
 /////////////////////////////////////////////////////////PIRMAS///////////////////////////////////////////////////////////////
 if ((dis1_priekis >= 60) && (dis2_desne >= 25)){  // pirmas ---
-    if ((pirmo_flegas == 1) && (pirmo_skaiciuokle >= 0) && (pirmo_skaiciuokle_papildoma == 0)){
+  /*  if ((pirmo_flegas == 1) && (pirmo_skaiciuokle >= 0) && (pirmo_skaiciuokle_papildoma == 0)){
         speeed_dsnes = 80;
         speeed_kaires = 80;
         vaziavimo_kryptys_I_prieki();
+        delay(50);
         if (pirmo_skaiciuokle % 2 ) {  // if --even-- than
             Stovejimas(); 
         }
     }
-  
+  */
     if (pirmo_skaiciuokle_papildoma > 0){  // is 5 ir 6 ateina signalas kad turi prasideti posukis i desne
      speeed_dsnes = 70;
      speeed_kaires = 70;
@@ -353,7 +354,7 @@ B = 1;  // kai ivyksta pakibimas sukant i desne
 ///////////////////////////////////////////////////////////ANTRAS/////////////////////////////////////////////////////////////
 if ((dis1_priekis >= 25) && (dis1_priekis <= 60)&& (dis2_desne >= 25)){  // antras --- suletejimas pries priekine kliuti
  
-    if ((antro_flegas == 1) && (antro_skaiciuokle >= 0) && (antro_skaiciuokle_papildoma == 0)){
+/*    if ((antro_flegas == 1) && (antro_skaiciuokle >= 0) && (antro_skaiciuokle_papildoma == 0)){
         speeed_dsnes = 80;
         speeed_kaires = 80;
         vaziavimo_kryptys_I_prieki();
@@ -362,7 +363,7 @@ if ((dis1_priekis >= 25) && (dis1_priekis <= 60)&& (dis2_desne >= 25)){  // antr
         }
      antro_skaiciuokle++;
      }
- 
+ */
     if (antro_skaiciuokle_papildoma > 0){  // is 5 ir 6 ateina signalas kad turi prasideti posukis i desne
         speeed_dsnes = 80;
         speeed_kaires = 80;
@@ -446,12 +447,12 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
         vaziavimo_kryptys_atgal();
         delay(200);
         vaziavimo_kryptys_suktis_i_kaire();
-        delay(400);
+        delay(500);
         vaziavimo_kryptys_I_prieki(); 
         delay(400); 
     }
  
-    if (BB > 0) {    // jeigu po 2 arba 1 veiksmo(bandymo sukti i kaire), pereinama prie 3 veiksmo didinamas pasukimas i desne
+    if (BB > 0) {    // jeigu po 2 arba 1 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
         speeed_dsnes = 80;
         speeed_kaires = 80;
         vaziavimo_kryptys_suktis_i_kaire();
@@ -459,8 +460,10 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
         vaziavimo_kryptys_I_prieki(); 
         delay(400);
         vaziavimo_kryptys_suktis_i_desne();
-        delay(500);
+        delay(1000);
         vaziavimo_kryptys_I_prieki(); 
+        delay(400);
+        BB = 0;
     }
 
     if ((trecio_flegas == 1) && (trecio_skaiciuokle >= 0)){
@@ -533,10 +536,8 @@ penkto_V_skaiciuokle = 0;
 sesto_veiksmo_enkoderis = 0;                             
 sesto_V_skaiciuokle = 0;
 ///////////////////////////// 
-A = 0;  
 B = 0;
 AA = 0;
-BB = 0;
 trecio_skaiciuokle++;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }  // trecio veiksmo pabaiga
@@ -622,8 +623,7 @@ penkto_veiksmo_enkoderis = 0;
 penkto_V_skaiciuokle = 0; 
 sesto_veiksmo_enkoderis = 0;                             
 sesto_V_skaiciuokle = 0;
-///////////////////////////// 
-A = 0; 
+/////////////////////////////  
 B = 0;
 AA = 0;
 BB = 0;
@@ -644,10 +644,10 @@ if ((dis1_priekis >= 25) && (dis2_desne >= 10) && (dis2_desne <= 25)){  // penkt
         speeed_dsnes = 80;
         speeed_kaires = 80;
         vaziavimo_kryptys_suktis_i_desne();
-        if (B % 2 ) {  // if --even-- than
-            vaziavimo_kryptys_I_prieki(); 
-            delay(200);
-        }
+        delay(600);
+        vaziavimo_kryptys_I_prieki(); 
+        delay(400);
+        B = 0;
      }
  
      if ((penkto_flegas == 1) && (penkto_skaiciuokle >= 0) && (penkto_skaiciuokle_papildoma ==0)){
@@ -728,8 +728,7 @@ ketvirto_veiksmo_enkoderis = 0;
 ketvirto_V_skaiciuokle = 0; 
 sesto_veiksmo_enkoderis = 0;                             
 sesto_V_skaiciuokle = 0; 
-/////////////////////////////   
-A = 0;  
+/////////////////////////////    
 AA = 0;
 BB = 0;
 penkto_skaiciuokle++;  
@@ -737,13 +736,14 @@ penkto_skaiciuokle++;
 }  // penkto veiksmo pabaiga
 //////////////////////////////////////////////////////////////SESTAS//////////////////////////////////////////////////////////
 if ((dis1_priekis >= 25) &&  (dis2_desne <= 10)){  //sestas
-    if (AA > 0){  // jeigu po 1 veiksmo(bandymo sukti i kaire), vel griztama prie 6 didinamas pasukimas i desne
+    if (AA > 0){  // jeigu po 1 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
         speeed_dsnes = 80;
         speeed_kaires = 80;
         vaziavimo_kryptys_I_prieki();
         delay(500);
         vaziavimo_kryptys_suktis_i_desne();
         delay(1000);
+        AA = 0;
     }
     if (sesto_skaiciuokle_papildoma > 0){  // is penkto ateina, kad kompensuotu krypti
         speeed_dsnes = 80;
@@ -821,10 +821,8 @@ ketvirto_V_skaiciuokle = 0;
 penkto_veiksmo_enkoderis = 0;                            
 penkto_V_skaiciuokle = 0; 
 ///////////////////////////// 
-A = 0; 
 B = 0;
 BB = 0;
-AA = 0;
 sesto_skaiciuokle++;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }  // sesto veiksmo pabaiga
