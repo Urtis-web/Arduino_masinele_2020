@@ -2,15 +2,14 @@
 #include <SharpIR.h>
 #include <SoftwareSerial.h>
 
-
 // hbridge
 // desnys
 #define enA 5      // enable line A
 #define in1 7      // h bridge valdymo signalai
-#define in2 8     // h bridge valdymo signalai
+#define in2 8      // h bridge valdymo signalai
 // kairys
-#define enB 6    // enable line B
-#define in3 9     // h bridge valdymo signalai
+#define enB 6      // enable line B
+#define in3 9      // h bridge valdymo signalai
 #define in4 10     // h bridge valdymo signalai
 
 //  Enkoderiai //////////////////////////////////////////
@@ -18,16 +17,16 @@
 #define enkoderis_2 A3 // desnys
 
 //is esp8266 valdymas/////////////////////////////////
-#define pirmyn 38
-#define kaire 42
-#define desne 40
-#define atgal 44
+#define pirmyn 38  // pinu priskyrimas
+#define kaire 42   // pinu priskyrimas
+#define desne 40   // pinu priskyrimas
+#define atgal 44   // pinu priskyrimas
 
 // ir sensoriai/////////////////////////////////////////
-#define IR1 A0  // priekis
-#define IR2 A1  // desne
-#define model1 1080 // for GP2Y0A21YK0F  used 1080
-#define model2 1080 // for GP2Y0A21YK0F  used 1080
+#define IR1 A0         // priekis
+#define IR2 A1         // desne
+#define model1 1080    // for GP2Y0A21YK0F  used 1080
+#define model2 1080    // for GP2Y0A21YK0F  used 1080
 /*
 2 to 15 cm GP2Y0A51SK0F  use 215
 4 to 30 cm GP2Y0A41SK0F / GP2Y0AF30 series  use 430
@@ -36,8 +35,9 @@
 20 to 150 cm GP2Y0A02YK0F use 20150
 100 to 550 cm GP2Y0A710K0F  use 100550
 */
+
 SharpIR IRpin_priekio(IR1, model1);  //  priekis
-SharpIR IRpin_desne(IR2, model2);  //  desne
+SharpIR IRpin_desne(IR2, model2);    //  desne
 
 // Pirmas enkoderis
 int pirmo_enkoderio_verte = 0;
@@ -54,23 +54,23 @@ int antro_analog_to_digital = 0;
 int antras_enkoderis = 0;
   
 // Skaiciavimas enkoderiu
-const int ddistance = 100;   // cm
-const int motor_power = 200;      // 0-255
-const int motor_offset = 5;       // Diff. when driving straight
-const float wheel_d = 68;           // Wheel diameter (mm)
-const float wheel_c = PI * wheel_d; // Wheel circumference (mm)
-const int counts_per_rev = 40;   // 
+const int ddistance = 100;           // cm
+const int motor_power = 200;         // 0-255
+const int motor_offset = 5;          // Diff. when driving straight
+const float wheel_d = 68;            // Wheel diameter (mm)
+const float wheel_c = PI * wheel_d;  // Wheel circumference (mm)
+const int counts_per_rev = 40;       // 
   
 ////////////////////////////////VAZIAVIMO FLEGAI///////////////////////////////////////
-int speeed_kaires = 100;
-int speeed_dsnes = 100;
+int speeed_kaires = 100;  // variklio greitis
+int speeed_dsnes = 100;   // variklio greitis
 
-int A = 0;
+int A = 0;    // nenaudojama
 int B = 0;    // atvejis kai sukant i desne uz kliuties atsimusa su desniu ratu ir pakimba
 int AA = 0;   // jeigu po 1 veiksmo(bandymo sukti i kaire), vel griztama prie 6 didinamas pasukimas i desne
 int BB = 0;   // jeigu po 2 arba 1 veiksmo(bandymo sukti i kaire), pereinama prie 3 veiksmo didinamas pasukimas i desne
-int AAA = 0;  // 
-int BBB = 0;  //
+int AAA = 0;  // nenaudojama
+int BBB = 0;  // nenaudojama
 
 int pirmo_flegas = 0;     //flegas kad atskirti kuris veiksmas dabar buvo
 int antro_flegas = 0;     //flegas kad atskirti kuris veiksmas dabar buvo
@@ -93,33 +93,33 @@ int ketvirto_skaiciuokle_papildoma  = 0;  //
 int penkto_skaiciuokle_papildoma  = 0;    // pranesa 5, kad katik buvo 6
 int sesto_skaiciuokle_papildoma  = 0;     // is penkto ateina, kad kompensuotu krypti
 
-int pirmo_veiksmo_enkoderis = 0;         // enkoderiu veikimo ciklu viename veiksme skaiciuokle
+int pirmo_veiksmo_enkoderis = 0;             // enkoderiu veikimo ciklu viename veiksme skaiciuokle
 int pirmo_V_1_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
 int pirmo_V_2_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
-int pirmo_V_skaiciuokle= 0; 
-int antro_veiksmo_enkoderis = 0;         // enkoderiu veikimo ciklu viename veiksme skaiciuokle
+int pirmo_V_skaiciuokle= 0;                  // skaiciuokle skirta suskaiciuoti kiek kartu nepasikeis enkoderiu vertes
+int antro_veiksmo_enkoderis = 0;             // enkoderiu veikimo ciklu viename veiksme skaiciuokle
 int antro_V_1_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
 int antro_V_2_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
-int antro_V_skaiciuokle = 0; 
-int trecio_veiksmo_enkoderis = 0;        // enkoderiu veikimo ciklu viename veiksme skaiciuokle
+int antro_V_skaiciuokle = 0;                 // skaiciuokle skirta suskaiciuoti kiek kartu nepasikeis enkoderiu vertes
+int trecio_veiksmo_enkoderis = 0;            // enkoderiu veikimo ciklu viename veiksme skaiciuokle
 int trecio_V_1_E = 0;                        // enkoderiu verciu pasikeitimo gaudykle
-int trecio_V_2_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
-int trecio_V_skaiciuokle = 0; 
-int ketvirto_veiksmo_enkoderis = 0;      // enkoderiu veikimo ciklu viename veiksme skaiciuokle
-int ketvirto_V_1_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
-int ketvirto_V_2_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
-int ketvirto_V_skaiciuokle = 0; 
-int penkto_veiksmo_enkoderis = 0;        // enkoderiu veikimo ciklu viename veiksme skaiciuokle
+int trecio_V_2_E = 0;                        // enkoderiu verciu pasikeitimo gaudykle
+int trecio_V_skaiciuokle = 0;                // skaiciuokle skirta suskaiciuoti kiek kartu nepasikeis enkoderiu vertes
+int ketvirto_veiksmo_enkoderis = 0;          // enkoderiu veikimo ciklu viename veiksme skaiciuokle
+int ketvirto_V_1_E = 0;                      // enkoderiu verciu pasikeitimo gaudykle
+int ketvirto_V_2_E = 0;                      // enkoderiu verciu pasikeitimo gaudykle
+int ketvirto_V_skaiciuokle = 0;              // skaiciuokle skirta suskaiciuoti kiek kartu nepasikeis enkoderiu vertes
+int penkto_veiksmo_enkoderis = 0;            // enkoderiu veikimo ciklu viename veiksme skaiciuokle
 int penkto_V_1_E = 0;                        // enkoderiu verciu pasikeitimo gaudykle
-int penkto_V_2_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
-int penkto_V_skaiciuokle = 0; 
-int sesto_veiksmo_enkoderis = 0;         // enkoderiu veikimo ciklu viename veiksme skaiciuokle
+int penkto_V_2_E = 0;                        // enkoderiu verciu pasikeitimo gaudykle
+int penkto_V_skaiciuokle = 0;                // skaiciuokle skirta suskaiciuoti kiek kartu nepasikeis enkoderiu vertes
+int sesto_veiksmo_enkoderis = 0;             // enkoderiu veikimo ciklu viename veiksme skaiciuokle
 int sesto_V_1_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
 int sesto_V_2_E = 0;                         // enkoderiu verciu pasikeitimo gaudykle
-int sesto_V_skaiciuokle = 0;
+int sesto_V_skaiciuokle = 0;                 // skaiciuokle skirta suskaiciuoti kiek kartu nepasikeis enkoderiu vertes
 ///////////////////////////////////////////////////////////////////////////////////////
 int dis1_priekis = 0;  // priekinio IR jutiklio atstumas iki objekto (cm)
-int dis2_desne = 0;  // galinio IR jutiklio atstumas iki objekto (cm)
+int dis2_desne = 0;    // galinio IR jutiklio atstumas iki objekto (cm)
 
 void setup()
 {
@@ -267,25 +267,34 @@ void vaziavimo_kryptys_atgal(){
 void Vaziavimas(){    
 /////////////////////////////////////////////////////////PIRMAS///////////////////////////////////////////////////////////////
 if ((dis1_priekis >= 60) && (dis2_desne >= 25)){  // pirmas ---
-  /*  if ((pirmo_flegas == 1) && (pirmo_skaiciuokle >= 0) && (pirmo_skaiciuokle_papildoma == 0)){
-        speeed_dsnes = 80;
-        speeed_kaires = 80;
-        vaziavimo_kryptys_I_prieki();
-        delay(50);
-        if (pirmo_skaiciuokle % 2 ) {  // if --even-- than
-            Stovejimas(); 
+/*    if ((pirmo_flegas == 1) && (pirmo_skaiciuokle >= 0) && (pirmo_skaiciuokle_papildoma == 0)){
+          speeed_dsnes = 80;
+          speeed_kaires = 80;
+          vaziavimo_kryptys_I_prieki();
+          delay(50);
+          if (pirmo_skaiciuokle % 2 ) {  // if --even-- than
+              Stovejimas(); 
+          }
+      }
+*/
+    if (pirmo_skaiciuokle_papildoma > 0){  // is 5 ir 6 ateina signalas kad turi prasideti posukis i desne
+        speeed_dsnes = 70;
+        speeed_kaires = 70;
+        vaziavimo_kryptys_suktis_i_desne();
+        delay(250);
+        pirmo_skaiciuokle_papildoma++;
+        AA = 1;  // jeigu po 1 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
+        BB = 1;  // jeigu po 1 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
+        if (pirmo_skaiciuokle_papildoma > 15){  // SAUGIKLIS jeigu veiksmas yra kartojamas daugiau nei 15 kartu (reiskia kad pastrigo)
+            vaziavimo_kryptys_suktis_i_kaire();
+            delay(500);
+            vaziavimo_kryptys_I_prieki(); 
+            delay(800);
+            vaziavimo_kryptys_suktis_i_desne();
+            delay(1500);
+            pirmo_skaiciuokle_papildoma = 1;
         }
     }
-  */
-    if (pirmo_skaiciuokle_papildoma > 0){  // is 5 ir 6 ateina signalas kad turi prasideti posukis i desne
-     speeed_dsnes = 70;
-     speeed_kaires = 70;
-     vaziavimo_kryptys_suktis_i_desne();
-     delay(250);
-     pirmo_skaiciuokle_papildoma++;
-     AA = 1;  // jeigu po 1 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
-     BB = 1;  // // jeigu po 1 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
-     }
 ////////////////////ENKODERIU DALIS///////////////////////
      if (pirmo_flegas == 0){   //jeigu pirma karta suveikia veiksmas
         pirmo_veiksmo_enkoderis++;
@@ -293,9 +302,9 @@ if ((dis1_priekis >= 60) && (dis2_desne >= 25)){  // pirmas ---
         pirmo_V_2_E = antro_enkoderio_suma ; 
      }
      if ((pirmo_flegas == 1) && (pirmo_veiksmo_enkoderis > 0)){
-        if ((pirmo_V_1_E == pirmo_enkoderio_suma) && (pirmo_V_2_E == antro_enkoderio_suma )){
-           pirmo_V_skaiciuokle++;
-            if (pirmo_V_skaiciuokle > 20){ 
+        if ((pirmo_V_1_E == pirmo_enkoderio_suma) && (pirmo_V_2_E == antro_enkoderio_suma )){  // jeigu abieju enkoderiu verte nepakito
+            pirmo_V_skaiciuokle++;
+            if (pirmo_V_skaiciuokle > 20){   // jeigu abieju enkoderiu verte nepakito daugiau nei 20 kartu is eiles
                    vaziavimo_kryptys_suktis_i_kaire();
                    delay(500);
                    vaziavimo_kryptys_I_prieki(); 
@@ -312,8 +321,8 @@ if ((dis1_priekis >= 60) && (dis2_desne >= 25)){  // pirmas ---
             }  
         }
         if ((pirmo_V_1_E < pirmo_enkoderio_suma) || (pirmo_V_2_E < antro_enkoderio_suma )){  
-          pirmo_V_1_E = pirmo_enkoderio_suma ;
-          pirmo_V_2_E = antro_enkoderio_suma ; 
+            pirmo_V_1_E = pirmo_enkoderio_suma ;
+            pirmo_V_2_E = antro_enkoderio_suma ; 
         }
     }
 /////////////////////////////
@@ -352,18 +361,18 @@ B = 1;  // kai ivyksta pakibimas sukant i desne
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } // pirmo veiksmo pabaiga
 ///////////////////////////////////////////////////////////ANTRAS/////////////////////////////////////////////////////////////
-if ((dis1_priekis >= 25) && (dis1_priekis <= 60)&& (dis2_desne >= 25)){  // antras --- suletejimas pries priekine kliuti
+if ((dis1_priekis >= 25) && (dis1_priekis <= 60) && (dis2_desne >= 25)){  // antras --- suletejimas pries priekine kliuti
  
 /*    if ((antro_flegas == 1) && (antro_skaiciuokle >= 0) && (antro_skaiciuokle_papildoma == 0)){
-        speeed_dsnes = 80;
-        speeed_kaires = 80;
-        vaziavimo_kryptys_I_prieki();
-        if (antro_skaiciuokle % 2 ) {  // if --even-- than
-            Stovejimas(); 
-        }
-     antro_skaiciuokle++;
-     }
- */
+          speeed_dsnes = 80;
+          speeed_kaires = 80;
+          vaziavimo_kryptys_I_prieki();
+          if (antro_skaiciuokle % 2 ) {  // if --even-- than
+              Stovejimas(); 
+          }
+      antro_skaiciuokle++;
+      }
+*/
     if (antro_skaiciuokle_papildoma > 0){  // is 5 ir 6 ateina signalas kad turi prasideti posukis i desne
         speeed_dsnes = 80;
         speeed_kaires = 80;
@@ -372,6 +381,15 @@ if ((dis1_priekis >= 25) && (dis1_priekis <= 60)&& (dis2_desne >= 25)){  // antr
         antro_skaiciuokle_papildoma++;
         AA = 1;  // jeigu po 2 veiksmo(bandymo sukti i desne), vel griztama prie 6 didinamas pasukimas i desne
         BB = 1;  // jeigu po 2 veiksmo(bandymo sukti i desne), pereinama prie 3 veiksmo didinamas pasukimas i desne
+        if (antro_skaiciuokle_papildoma > 15){  // SAUGIKLIS jeigu veiksmas yra kartojamas daugiau nei 15 kartu (reiskia kad pastrigo)
+            vaziavimo_kryptys_suktis_i_kaire();
+            delay(500);
+            vaziavimo_kryptys_I_prieki(); 
+            delay(800);
+            vaziavimo_kryptys_suktis_i_desne();
+            delay(2000);
+            antro_skaiciuokle_papildoma = 1;
+        }
      }
 ////////////////////ENKODERIU DALIS///////////////////////
     if (antro_flegas == 0){   //jeigu pirma karta suveikia veiksmas
@@ -380,9 +398,9 @@ if ((dis1_priekis >= 25) && (dis1_priekis <= 60)&& (dis2_desne >= 25)){  // antr
         antro_V_2_E = antro_enkoderio_suma ; 
     }
     if ((antro_flegas == 1) && (antro_veiksmo_enkoderis > 0)){
-        if ((antro_V_1_E == pirmo_enkoderio_suma) && (antro_V_2_E == antro_enkoderio_suma )){
+        if ((antro_V_1_E == pirmo_enkoderio_suma) && (antro_V_2_E == antro_enkoderio_suma )){  // jeigu abieju enkoderiu verte nepakito
             antro_V_skaiciuokle++;
-            if (antro_V_skaiciuokle > 20){ 
+            if (antro_V_skaiciuokle > 20){  // jeigu abieju enkoderiu verte nepakito daugiau nei 20 kartu is eiles
                    vaziavimo_kryptys_suktis_i_kaire();
                    delay(500);
                    vaziavimo_kryptys_I_prieki(); 
@@ -467,6 +485,7 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
     }
 
     if ((trecio_flegas == 1) && (trecio_skaiciuokle >= 0)){
+        trecio_skaiciuokle_papildoma++;
         speeed_dsnes = 80;
         speeed_kaires = 80;
         vaziavimo_kryptys_suktis_i_kaire();
@@ -474,7 +493,18 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
         if (trecio_skaiciuokle % 2 ) {  // if --even-- than
             vaziavimo_kryptys_I_prieki(); 
         } 
-    }
+            if (trecio_skaiciuokle_papildoma > 15){  // SAUGIKLIS jeigu veiksmas yra kartojamas daugiau nei 15 kartu (reiskia kad pastrigo)
+                vaziavimo_kryptys_atgal();
+                delay(400);
+                vaziavimo_kryptys_suktis_i_kaire();
+                delay(800);
+                vaziavimo_kryptys_I_prieki(); 
+                delay(500);
+                vaziavimo_kryptys_suktis_i_desne();
+                delay(1500);
+                trecio_skaiciuokle_papildoma = 1;
+            }
+        }
 ////////////////////ENKODERIU DALIS///////////////////////
     if (trecio_flegas == 0){   //jeigu pirma karta suveikia veiksmas
         trecio_veiksmo_enkoderis++;
@@ -482,9 +512,9 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
         trecio_V_2_E = antro_enkoderio_suma ; 
      }
     if ((trecio_flegas == 1) && (trecio_veiksmo_enkoderis > 0)){
-        if ((trecio_V_1_E == pirmo_enkoderio_suma) && (trecio_V_2_E == antro_enkoderio_suma )){
+        if ((trecio_V_1_E == pirmo_enkoderio_suma) && (trecio_V_2_E == antro_enkoderio_suma )){  // jeigu abieju enkoderiu verte nepakito
             trecio_V_skaiciuokle++;
-            if (trecio_V_skaiciuokle > 20){ 
+            if (trecio_V_skaiciuokle > 20){   // jeigu abieju enkoderiu verte nepakito daugiau nei 20 kartu is eiles
                    vaziavimo_kryptys_suktis_i_kaire();
                    delay(500);
                    vaziavimo_kryptys_I_prieki(); 
@@ -542,7 +572,7 @@ trecio_skaiciuokle++;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }  // trecio veiksmo pabaiga
 /////////////////////////////////////////////////////////KETVIRTAS///////////////////////////////////////////////////////////////
-if ((dis1_priekis <= 25) &&  (dis2_desne <= 25)){  // ketvirtas
+if ((dis1_priekis <= 25) &&  (dis2_desne <= 25)){     // ketvirtas
     if ((dis1_priekis <= 7) &&  (dis2_desne <= 30)){  // atgal jei buggas
          speeed_dsnes = 80;
          speeed_kaires = 80;
@@ -555,6 +585,7 @@ if ((dis1_priekis <= 25) &&  (dis2_desne <= 25)){  // ketvirtas
     }
  
     if ((ketvirto_flegas == 1) && (ketvirto_skaiciuokle >= 0)){
+        ketvirto_skaiciuokle_papildoma++;
         speeed_dsnes = 80;
         speeed_kaires = 80;
         vaziavimo_kryptys_suktis_i_kaire();
@@ -562,6 +593,17 @@ if ((dis1_priekis <= 25) &&  (dis2_desne <= 25)){  // ketvirtas
         if (ketvirto_skaiciuokle % 2 ) {  // if --even-- than
             vaziavimo_kryptys_I_prieki(); 
         } 
+        if (ketvirto_skaiciuokle_papildoma > 15){  // SAUGIKLIS jeigu veiksmas yra kartojamas daugiau nei 15 kartu (reiskia kad pastrigo)
+            vaziavimo_kryptys_atgal();
+            delay(400);
+            vaziavimo_kryptys_suktis_i_kaire();
+            delay(500);
+            vaziavimo_kryptys_I_prieki(); 
+            delay(800);
+            vaziavimo_kryptys_suktis_i_desne();
+            delay(1500);
+            ketvirto_skaiciuokle_papildoma = 1;
+        }
     }
 ////////////////////ENKODERIU DALIS///////////////////////
     if (ketvirto_flegas == 0){   //jeigu pirma karta suveikia veiksmas
@@ -570,9 +612,9 @@ if ((dis1_priekis <= 25) &&  (dis2_desne <= 25)){  // ketvirtas
         ketvirto_V_2_E = antro_enkoderio_suma ; 
     }
     if ((ketvirto_flegas == 1) && (ketvirto_veiksmo_enkoderis > 0)){
-         if ((ketvirto_V_1_E == pirmo_enkoderio_suma) && (ketvirto_V_2_E == antro_enkoderio_suma )){
+         if ((ketvirto_V_1_E == pirmo_enkoderio_suma) && (ketvirto_V_2_E == antro_enkoderio_suma )){  // jeigu abieju enkoderiu verte nepakito
              ketvirto_V_skaiciuokle++;
-             if (ketvirto_V_skaiciuokle > 20){ 
+             if (ketvirto_V_skaiciuokle > 20){   // jeigu abieju enkoderiu verte nepakito daugiau nei 20 kartu is eiles
                    vaziavimo_kryptys_suktis_i_kaire();
                    delay(500);
                    vaziavimo_kryptys_I_prieki(); 
@@ -588,10 +630,10 @@ if ((dis1_priekis <= 25) &&  (dis2_desne <= 25)){  // ketvirtas
                  ketvirto_V_skaiciuokle = 0;
               }  
           }
-         if ((ketvirto_V_1_E < pirmo_enkoderio_suma) || (ketvirto_V_2_E < antro_enkoderio_suma )){  
-             ketvirto_V_1_E = pirmo_enkoderio_suma ;
-             ketvirto_V_2_E = antro_enkoderio_suma ; 
-         }
+          if ((ketvirto_V_1_E < pirmo_enkoderio_suma) || (ketvirto_V_2_E < antro_enkoderio_suma )){  
+              ketvirto_V_1_E = pirmo_enkoderio_suma ;
+              ketvirto_V_2_E = antro_enkoderio_suma ; 
+          }
      } 
 /////////////////////////////
 pirmo_flegas = 0;
@@ -657,6 +699,17 @@ if ((dis1_priekis >= 25) && (dis2_desne >= 10) && (dis2_desne <= 25)){  // penkt
           if (penkto_skaiciuokle_papildoma % 2 ) {  // if --even-- than
               vaziavimo_kryptys_I_prieki(); 
           }
+          if (penkto_skaiciuokle > 30){  // SAUGIKLIS jeigu veiksmas yra kartojamas daugiau nei 30 (6 sekundes) kartu (reiskia kad pastrigo)
+              vaziavimo_kryptys_atgal();
+              delay(400);
+              vaziavimo_kryptys_suktis_i_kaire();
+              delay(500);
+              vaziavimo_kryptys_I_prieki(); 
+              delay(800);
+              vaziavimo_kryptys_suktis_i_desne();
+              delay(1500);
+              penkto_skaiciuokle = 1;
+          }
       }
   
      if (penkto_skaiciuokle_papildoma >0 ){ // is sesto ateina, kad nepamestu trasos
@@ -667,7 +720,18 @@ if ((dis1_priekis >= 25) && (dis2_desne >= 10) && (dis2_desne <= 25)){  // penkt
          if (penkto_skaiciuokle_papildoma % 2 ) {  // if --even-- than
              vaziavimo_kryptys_I_prieki(); 
          }
-      }
+         if (penkto_skaiciuokle_papildoma > 30){  // SAUGIKLIS jeigu veiksmas yra kartojamas daugiau nei 30 (6 sekundes) kartu (reiskia kad pastrigo)
+             vaziavimo_kryptys_atgal();
+             delay(400);
+             vaziavimo_kryptys_suktis_i_kaire();
+             delay(500);
+             vaziavimo_kryptys_I_prieki(); 
+             delay(800);
+             vaziavimo_kryptys_suktis_i_desne();
+             delay(1500);
+             penkto_skaiciuokle_papildoma = 1;
+         }
+     }
 ////////////////////ENKODERIU DALIS///////////////////////
       if (penkto_flegas == 0){   //jeigu pirma karta suveikia veiksmas
           penkto_veiksmo_enkoderis++;
@@ -675,9 +739,9 @@ if ((dis1_priekis >= 25) && (dis2_desne >= 10) && (dis2_desne <= 25)){  // penkt
           penkto_V_2_E = antro_enkoderio_suma ; 
       }
       if ((penkto_flegas == 1) && (penkto_veiksmo_enkoderis > 0)){
-           if ((penkto_V_1_E == pirmo_enkoderio_suma) && (penkto_V_2_E == antro_enkoderio_suma )){
+           if ((penkto_V_1_E == pirmo_enkoderio_suma) && (penkto_V_2_E == antro_enkoderio_suma )){  // jeigu abieju enkoderiu verte nepakito
                penkto_V_skaiciuokle++;
-               if (penkto_V_skaiciuokle > 20){ 
+               if (penkto_V_skaiciuokle > 20){   // jeigu abieju enkoderiu verte nepakito daugiau nei 20 kartu is eiles
                    vaziavimo_kryptys_suktis_i_kaire();
                    delay(500);
                    vaziavimo_kryptys_I_prieki(); 
@@ -766,10 +830,10 @@ if ((dis1_priekis >= 25) &&  (dis2_desne <= 10)){  //sestas
          sesto_V_1_E = pirmo_enkoderio_suma ;
          sesto_V_2_E = antro_enkoderio_suma ; 
      }
-     if ((sesto_flegas == 1) && (sesto_veiksmo_enkoderis > 0)){
-          if ((sesto_V_1_E == pirmo_enkoderio_suma) && (sesto_V_2_E == antro_enkoderio_suma )){
+     if ((sesto_flegas == 1) && (sesto_veiksmo_enkoderis > 0)){  
+          if ((sesto_V_1_E == pirmo_enkoderio_suma) && (sesto_V_2_E == antro_enkoderio_suma )){  // jeigu abieju enkoderiu verte nepakito
               sesto_V_skaiciuokle++;
-              if (sesto_V_skaiciuokle > 20){ 
+              if (sesto_V_skaiciuokle > 20){  // jeigu abieju enkoderiu verte nepakito daugiau nei 20 kartu is eiles
                    vaziavimo_kryptys_suktis_i_kaire();
                    delay(500);
                    vaziavimo_kryptys_I_prieki(); 
@@ -782,7 +846,7 @@ if ((dis1_priekis >= 25) &&  (dis2_desne <= 10)){  //sestas
                    delay(2500);
                    vaziavimo_kryptys_I_prieki(); 
                    delay(400);
-                  sesto_V_skaiciuokle = 0;
+                   sesto_V_skaiciuokle = 0;
                }  
            }
            if ((sesto_V_1_E < pirmo_enkoderio_suma) || (sesto_V_2_E < antro_enkoderio_suma )){  
