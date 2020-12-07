@@ -292,24 +292,28 @@ if ((dis1_priekis >= 60) && (dis2_desne >= 25)){  // pirmas ---
         pirmo_V_2_E = antro_enkoderio_suma ; 
      }
      if ((pirmo_flegas == 1) && (pirmo_veiksmo_enkoderis > 0)){
-        pirmo_veiksmo_enkoderis++;
         if ((pirmo_V_1_E == pirmo_enkoderio_suma) && (pirmo_V_2_E == antro_enkoderio_suma )){
            pirmo_V_skaiciuokle++;
             if (pirmo_V_skaiciuokle > 20){ 
+                vaziavimo_kryptys_atgal();
+                delay(250);
                 vaziavimo_kryptys_suktis_i_kaire();
                 delay(250);
                 vaziavimo_kryptys_I_prieki(); 
                 delay(400);
                 vaziavimo_kryptys_suktis_i_desne();
                 delay(550);
+                vaziavimo_kryptys_I_prieki(); 
+                delay(400);
+                vaziavimo_kryptys_suktis_i_desne();
+                delay(800);
                 pirmo_V_skaiciuokle = 0;
             }  
         }
-      if ((pirmo_V_1_E < pirmo_enkoderio_suma) || (pirmo_V_2_E < antro_enkoderio_suma )){  
+        if ((pirmo_V_1_E < pirmo_enkoderio_suma) || (pirmo_V_2_E < antro_enkoderio_suma )){  
           pirmo_V_1_E = pirmo_enkoderio_suma ;
           pirmo_V_2_E = antro_enkoderio_suma ; 
-          pirmo_V_skaiciuokle = 0;
-      }
+        }
     }
 /////////////////////////////
 pirmo_flegas = 1;
@@ -375,23 +379,27 @@ if ((dis1_priekis >= 25) && (dis1_priekis <= 60)&& (dis2_desne >= 25)){  // antr
         antro_V_2_E = antro_enkoderio_suma ; 
     }
     if ((antro_flegas == 1) && (antro_veiksmo_enkoderis > 0)){
-        antro_veiksmo_enkoderis++;
         if ((antro_V_1_E == pirmo_enkoderio_suma) && (antro_V_2_E == antro_enkoderio_suma )){
             antro_V_skaiciuokle++;
             if (antro_V_skaiciuokle > 20){ 
+                vaziavimo_kryptys_atgal();
+                delay(250);
                 vaziavimo_kryptys_suktis_i_kaire();
                 delay(250);
                 vaziavimo_kryptys_I_prieki(); 
                 delay(400);
                 vaziavimo_kryptys_suktis_i_desne();
                 delay(550);
+                vaziavimo_kryptys_I_prieki(); 
+                delay(400);
+                vaziavimo_kryptys_suktis_i_desne();
+                delay(800);
                 antro_V_skaiciuokle = 0;
              }  
         }
         if ((antro_V_1_E < pirmo_enkoderio_suma) || (antro_V_2_E < antro_enkoderio_suma )){  
             antro_V_1_E = pirmo_enkoderio_suma ;
             antro_V_2_E = antro_enkoderio_suma ; 
-            antro_V_skaiciuokle = 0;
         }
     }  
 /////////////////////////////
@@ -471,23 +479,27 @@ if ((dis1_priekis <= 25) && (dis2_desne >= 25)){  //trecias
         trecio_V_2_E = antro_enkoderio_suma ; 
      }
     if ((trecio_flegas == 1) && (trecio_veiksmo_enkoderis > 0)){
-        trecio_veiksmo_enkoderis++;
         if ((trecio_V_1_E == pirmo_enkoderio_suma) && (trecio_V_2_E == antro_enkoderio_suma )){
             trecio_V_skaiciuokle++;
             if (trecio_V_skaiciuokle > 20){ 
+                vaziavimo_kryptys_atgal();
+                delay(250);
                 vaziavimo_kryptys_suktis_i_kaire();
                 delay(250);
                 vaziavimo_kryptys_I_prieki(); 
                 delay(400);
                 vaziavimo_kryptys_suktis_i_desne();
                 delay(550);
+                vaziavimo_kryptys_I_prieki(); 
+                delay(400);
+                vaziavimo_kryptys_suktis_i_desne();
+                delay(800);
                 trecio_V_skaiciuokle = 0;
             }  
          }
          if ((trecio_V_1_E < pirmo_enkoderio_suma) || (trecio_V_2_E < antro_enkoderio_suma )){  
              trecio_V_1_E = pirmo_enkoderio_suma ;
              trecio_V_2_E = antro_enkoderio_suma ; 
-             trecio_V_skaiciuokle = 0;
          }
     } 
 /////////////////////////////
@@ -557,23 +569,27 @@ if ((dis1_priekis <= 25) &&  (dis2_desne <= 25)){  // ketvirtas
         ketvirto_V_2_E = antro_enkoderio_suma ; 
     }
     if ((ketvirto_flegas == 1) && (ketvirto_veiksmo_enkoderis > 0)){
-         ketvirto_veiksmo_enkoderis++;
          if ((ketvirto_V_1_E == pirmo_enkoderio_suma) && (ketvirto_V_2_E == antro_enkoderio_suma )){
              ketvirto_V_skaiciuokle++;
              if (ketvirto_V_skaiciuokle > 20){ 
+                 vaziavimo_kryptys_atgal();
+                 delay(250);
                  vaziavimo_kryptys_suktis_i_kaire();
                  delay(250);
                  vaziavimo_kryptys_I_prieki(); 
                  delay(400);
                  vaziavimo_kryptys_suktis_i_desne();
                  delay(550);
+                 vaziavimo_kryptys_I_prieki(); 
+                 delay(400);
+                 vaziavimo_kryptys_suktis_i_desne();
+                 delay(800);
                  ketvirto_V_skaiciuokle = 0;
               }  
           }
          if ((ketvirto_V_1_E < pirmo_enkoderio_suma) || (ketvirto_V_2_E < antro_enkoderio_suma )){  
              ketvirto_V_1_E = pirmo_enkoderio_suma ;
              ketvirto_V_2_E = antro_enkoderio_suma ; 
-             ketvirto_V_skaiciuokle = 0;
          }
      } 
 /////////////////////////////
@@ -659,23 +675,27 @@ if ((dis1_priekis >= 25) && (dis2_desne >= 10) && (dis2_desne <= 25)){  // penkt
           penkto_V_2_E = antro_enkoderio_suma ; 
       }
       if ((penkto_flegas == 1) && (penkto_veiksmo_enkoderis > 0)){
-           penkto_veiksmo_enkoderis++;
            if ((penkto_V_1_E == pirmo_enkoderio_suma) && (penkto_V_2_E == antro_enkoderio_suma )){
                penkto_V_skaiciuokle++;
                if (penkto_V_skaiciuokle > 20){ 
+                   vaziavimo_kryptys_atgal();
+                   delay(250);
                    vaziavimo_kryptys_suktis_i_kaire();
                    delay(250);
                    vaziavimo_kryptys_I_prieki(); 
                    delay(400);
                    vaziavimo_kryptys_suktis_i_desne();
                    delay(550);
+                   vaziavimo_kryptys_I_prieki(); 
+                   delay(400);
+                   vaziavimo_kryptys_suktis_i_desne();
+                   delay(800);
                    penkto_V_skaiciuokle = 0;
                }  
            }
            if ((penkto_V_1_E < pirmo_enkoderio_suma) || (penkto_V_2_E < antro_enkoderio_suma )){  
                penkto_V_1_E = pirmo_enkoderio_suma ;
                penkto_V_2_E = antro_enkoderio_suma ; 
-               penkto_V_skaiciuokle = 0;
            }
       }
 /////////////////////////////
@@ -742,29 +762,33 @@ if ((dis1_priekis >= 25) &&  (dis2_desne <= 10)){  //sestas
      }
 ////////////////////ENKODERIU DALIS///////////////////////
      if (sesto_flegas == 0){   //jeigu pirma karta suveikia veiksmas
-      sesto_veiksmo_enkoderis++;
-      sesto_V_1_E = pirmo_enkoderio_suma ;
-      sesto_V_2_E = antro_enkoderio_suma ; 
+         sesto_veiksmo_enkoderis++;
+         sesto_V_1_E = pirmo_enkoderio_suma ;
+         sesto_V_2_E = antro_enkoderio_suma ; 
      }
      if ((sesto_flegas == 1) && (sesto_veiksmo_enkoderis > 0)){
-          sesto_veiksmo_enkoderis++;
           if ((sesto_V_1_E == pirmo_enkoderio_suma) && (sesto_V_2_E == antro_enkoderio_suma )){
               sesto_V_skaiciuokle++;
               if (sesto_V_skaiciuokle > 20){ 
-                  vaziavimo_kryptys_suktis_i_kaire();
-                  delay(250);
-                  vaziavimo_kryptys_I_prieki(); 
-                  delay(400);
-                  vaziavimo_kryptys_suktis_i_desne();
-                  delay(550);
+                  vaziavimo_kryptys_atgal();
+                   delay(250);
+                   vaziavimo_kryptys_suktis_i_kaire();
+                   delay(250);
+                   vaziavimo_kryptys_I_prieki(); 
+                   delay(400);
+                   vaziavimo_kryptys_suktis_i_desne();
+                   delay(550);
+                   vaziavimo_kryptys_I_prieki(); 
+                   delay(400);
+                   vaziavimo_kryptys_suktis_i_desne();
+                   delay(800);
                   sesto_V_skaiciuokle = 0;
                }  
-          }
-          if ((sesto_V_1_E < pirmo_enkoderio_suma) || (sesto_V_2_E < antro_enkoderio_suma )){  
+           }
+           if ((sesto_V_1_E < pirmo_enkoderio_suma) || (sesto_V_2_E < antro_enkoderio_suma )){  
                sesto_V_1_E = pirmo_enkoderio_suma ;
                sesto_V_2_E = antro_enkoderio_suma ; 
-               sesto_V_skaiciuokle = 0;
-          }
+           }
       }
 /////////////////////////////
 pirmo_flegas = 0;
